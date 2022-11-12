@@ -7,32 +7,31 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "school")
+@Entity // 跟Spring Boot說這個class是實體類
+@Table(name = "school") // 連動哪一張表
 public class School {
-	
+
 	@Id
-	@Column(name = "course_code")   //課程代碼
-	private String coursecode;    
-	
-	@Column(name = "course")         //課程名稱
-	private String course;         
-	
-	@Column(name = "class_day")     //星期
+	@Column(name = "course_code") // 課程代碼
+	private String coursecode;
+
+	@Column(name = "course") // 課程名稱
+	private String course;
+
+	@Column(name = "class_day") // 上課星期
 	private String classday;
-	
-	@Column(name = "class_time")    //課堂開始時間
+
+	@Column(name = "class_time") // 上課時間
 	private LocalTime classtime;
-	
-	@Column(name = "recess")         //課堂結束時間
+
+	@Column(name = "recess") // 下課時間
 	private LocalTime recess;
-	
-	@Column(name = "units")          //課程學分
+
+	@Column(name = "units") // 課程學分
 	private int units;
-	
-	
+
 	public School() {
-		
+
 	}
 
 	public School(String coursecode, String course, String classday, LocalTime classtime, LocalTime recess, int units) {
@@ -56,8 +55,8 @@ public class School {
 		return course;
 	}
 
-	public void setCourse(String course) {
-		this.course = course;
+	public void setCourse(String cours) {
+		this.course = cours;
 	}
 
 	public String getClassday() {
@@ -72,16 +71,16 @@ public class School {
 		return classtime;
 	}
 
+	public void setClasstime(LocalTime classtime) {
+		this.classtime = classtime;
+	}
+
 	public LocalTime getRecess() {
 		return recess;
 	}
 
 	public void setRecess(LocalTime recess) {
 		this.recess = recess;
-	}
-
-	public void setClasstime(LocalTime classtime) {
-		this.classtime = classtime;
 	}
 
 	public int getUnits() {
@@ -91,4 +90,5 @@ public class School {
 	public void setUnits(int units) {
 		this.units = units;
 	}
+
 }

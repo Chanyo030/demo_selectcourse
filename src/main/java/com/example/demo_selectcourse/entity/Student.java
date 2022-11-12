@@ -8,50 +8,48 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "student")
 public class Student {
-
+	
 	@Id
-	@Column(name = "id")            //學號
-	private String id;
+	@Column(name="student_id")
+	private String studentId;
 	
-	@Column(name = "name")         //姓名
-	private String name;
+	@Column(name = "student_name")
+	private String studentName;
 	
-	@Column(name = "class_code")         //課程代碼
-	private String classcode;
-	
+	@Column(name = "class_code")
+	private String studentClassCode;
 
 	public Student() {
-		
+	
 	}
 
-	public Student(String id, String name, String classcode) {
-		this.id = id;
-		this.name = name;
-		this.classcode = classcode;
+	public Student(String studentId, String studentName) {
+		this.studentId = studentId;
+		this.studentName = studentName;
 	}
 
-	public String getId() {
-		return id;
+	public String getStudentId() {
+		return studentId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 
-	public String getName() {
-		return name;
+	public String getStudentName() {
+		return studentName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 
-	public String getClasscode() {
-		return classcode;
+	public String getStudentClassCode() {
+		return studentClassCode;
 	}
 
-	public void setClasscode(String classcode) {
-		this.classcode = classcode;
+	public void setStudentClassCode(String studentClassCode) {
+		this.studentClassCode = studentClassCode;
 	}
-
+	
 }
