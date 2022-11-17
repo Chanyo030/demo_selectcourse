@@ -43,6 +43,14 @@ public class School {
 		this.recess = recess;
 		this.units = units;
 	}
+	
+	public School(String course, String classDay, LocalTime classTime, LocalTime recess, int units) {
+		this.course = course;
+		this.classDay = classDay;
+		this.classTime = classTime;
+		this.recess = recess;
+		this.units = units;
+	}
 
 	//Get、Set方法 讓其他class可以設定及取得這些屬性的值
 	
