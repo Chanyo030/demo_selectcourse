@@ -273,7 +273,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 //			selectCourseRes.setMessage("¬dµL½Òµ{¥N½X µLªk¿ï½Ò");
 //		}
 		boolean b = keepCourse.containsAll(coursCode); // ¿é¤Jªº½Òµ{¬O§_²Å¦XDB¥þ³¡ªº½Ò¦¨¥N½X
-		if (b == false) {// if(b)  ¥¬ªLªº¹w³]­È¬Ofalse
+		if (b == false) {// if(!b)
 			return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage()); // ¬dµL½Òµ{¥N½X
 		}
 
