@@ -6,8 +6,8 @@ import com.example.demo_selectcourse.entity.School;
 import com.example.demo_selectcourse.entity.Student;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class SelectCourseRes {
+@JsonInclude(JsonInclude.Include.NON_NULL)          //隱藏NULL
+public class SelectCourseRes {             //回傳
 
 	//SCHOOL
 	private School school;
@@ -48,8 +48,8 @@ public class SelectCourseRes {
 	public SelectCourseRes(String message) {
 		this.message = message;
 	}
-	/*================建構 and get/set==================*/
-
+	/*================建構方法 and get/set==================*/
+	//有、無參數的建構方法用意是為了能夠一次設定多個屬性的值
 	public SelectCourseRes() {
 		
 	}
@@ -62,6 +62,8 @@ public class SelectCourseRes {
 		this.message = message;
 	}
 
+	//Get、Set方法 讓其他class可以設定及取得這些屬性的值
+	
 	public School getSchool() {
 		return school;
 	}

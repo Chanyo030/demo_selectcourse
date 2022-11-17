@@ -1,6 +1,6 @@
 package com.example.demo_selectcourse.constants;
 
-public enum SelectCourseRtnCode {
+public enum SelectCourseRtnCode {           //enumerated (enum) 列舉
 
 	
 	SUCCESSFUL ("200","Successful"),    //創建、輸入成功
@@ -21,16 +21,15 @@ public enum SelectCourseRtnCode {
 	OUTFID("400","outfid"),//衝堂
 	NOT_CLASS_GO_ADD_CLASS("400","No classes have been selected yet. Please add them.");	 //你沒選過課 請在此加選
 	
-		
+	
+	//名稱自取  (code , message)
+	private String code;
+	private String rtnmessage;
 	
 	private SelectCourseRtnCode(String code, String rtnmessage) {
 		this.code = code;
 		this.rtnmessage = rtnmessage;
 	}
-	
-	//名稱自取  (code , message)
-	private String code;
-	private String rtnmessage;
 	
 	public String getCode() {
 		return code;
@@ -39,9 +38,4 @@ public enum SelectCourseRtnCode {
 	public String getRtnmessage() {
 		return rtnmessage;
 	}
-	
-	
-	
-
-	
 }

@@ -22,68 +22,68 @@ import com.example.demo_selectcourse.repository.StudentDao;
 import com.example.demo_selectcourse.service.ifs.SelectCourseService;
 import com.example.demo_selectcourse.vo.SelectCourseRes;
 
-@Service
-public class SelectCourseServiceImpl implements SelectCourseService {
+@Service     // 讓Spring Boot託管 這樣才有辦法在其他地方被@Autowired
+public class SelectCourseServiceImpl implements SelectCourseService {         //對內部進行實作
 
-	@Autowired
+	@Autowired           //依賴    預設會依注入對象的類別型態來選擇容器中相符的物件來注入。
 	private SchoolDao schoolDao;
 
-	@Autowired
+	@Autowired          //依賴    預設會依注入對象的類別型態來選擇容器中相符的物件來注入。
 	private StudentDao studentDao;
 
 	/* ================================================= */
 
 	// SCHOOL
 	// 新增課程 Create
-	@Override
-	public SelectCourseRes createCours(String coursecode, String course, String classday, String classtime,
+	@Override      //覆寫、重新定義
+	public SelectCourseRes createCours(String courseCode, String course, String classDay, String classTime,
 			String recess, int units) {
 		
-		boolean a = classDay(classday);
+		boolean a = classDay(classDay);    //利用布林值去判斷上課星期格式是否符合設定的格式
 
 		// 課程代碼不得為空 || 課程名稱不得為空 || 課程星期不得為空
-		if (!StringUtils.hasText(coursecode) || !StringUtils.hasText(course) || !StringUtils.hasText(classday)) {
+		if (!StringUtils.hasText(courseCode) || !StringUtils.hasText(course) || !StringUtils.hasText(classDay)) {
 //			SelectCourseRes selectCourseRes2 = new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage());
 //			return selectCourseRes2;
-			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage());   //課程代碼不得為空
+			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage());   //提示訊息 課程代碼不得為空
 		}
 
 		 //課程星期格式錯誤
-		if (a != true) {
-			return new SelectCourseRes(SelectCourseRtnCode.FORMAT_ERROR.getRtnmessage());
+		if (a != true) {                        //當判斷結果不為true
+			return new SelectCourseRes(SelectCourseRtnCode.FORMAT_ERROR.getRtnmessage()); //提示訊息 課程星期格式錯誤
 		}
 		
-		LocalTime classtimeLocalTime = classTime(classtime);    // 上課時間錯誤提醒
-		LocalTime recessLocalTime = classTime(recess);            // 下課時間錯誤提醒
-		if (!StringUtils.hasLength(classtime) || !StringUtils.hasLength(recess)) {
-			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //課程時間不得為空
-		} else if (classtimeLocalTime == null || recessLocalTime == null) {
-			return new SelectCourseRes(SelectCourseRtnCode.FORMAT_ERROR.getRtnmessage()); //課程時間格式錯誤
+		LocalTime classtimeLocalTime = classTime(classTime);    // 上課時間錯誤提醒：確認是否有上課時間這東西
+		LocalTime recessLocalTime = classTime(recess);            // 下課時間錯誤提醒：確認是否有下課時間這東西
+		if (!StringUtils.hasLength(classTime) || !StringUtils.hasLength(recess)) {    //有上、下課時間。如果上、下課時間為空
+			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //提示訊息 課程時間不得為空
+		} else if (classtimeLocalTime == null || recessLocalTime == null) {               //如果上、下課時間為0
+			return new SelectCourseRes(SelectCourseRtnCode.FORMAT_ERROR.getRtnmessage()); //提示訊息 課程時間格式錯誤
 		}
 
 		// 學分數錯誤提醒
-		if (units == 0) {
-			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //學分數不得為空
+		if (units == 0) {    //如果學分數為0
+			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //提示訊息 學分數不得為空
 		}
-		if (units > 3) {
-			return new SelectCourseRes(SelectCourseRtnCode.CLASS_CODE_EXISTED.getRtnmessage()); //超過學分數限制
-		}
-
-		Optional<School> coursCode = schoolDao.findById(coursecode);
-
-		if (coursCode.isPresent()) {
-			return new SelectCourseRes(SelectCourseRtnCode.CLASS_CODE_EXISTED.getRtnmessage()); //課程代碼不得重複
+		if (units > 3) {     //如果選修的課程超過3學分的範圍限制
+			return new SelectCourseRes(SelectCourseRtnCode.CLASS_CODE_EXISTED.getRtnmessage()); //提示訊息 超過學分數限制
 		}
 
-		School school = new School(coursecode, course, classday, classtimeLocalTime, recessLocalTime, units);
+		Optional<School> coursCode = schoolDao.findById(courseCode);      //透過DB所設的PK去取得學校的所有課程資訊
+
+		if (coursCode.isPresent()) {              //如果我們在Postman設定的課程代碼已經存在或是被使用
+			return new SelectCourseRes(SelectCourseRtnCode.CLASS_CODE_EXISTED.getRtnmessage()); //提示訊息 課程代碼不得重複
+		}
+
+		School school = new School(courseCode, course, classDay, classtimeLocalTime, recessLocalTime, units);
 		schoolDao.save(school);
 		return new SelectCourseRes(school, SelectCourseRtnCode.SUCCESSFUL.getRtnmessage());//課程創建成功
 	}
 
 	// [上課星期 防呆]
-	public boolean classDay(String classday) {
+	public boolean classDay(String classDay) {
 		List<String> classWeekDay = Arrays.asList("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-		return classWeekDay.contains(classday); // 確認使用者輸入的參數是否符合List陣列的所有內容
+		return classWeekDay.contains(classDay); // 確認使用者輸入的參數是否符合List陣列的所有內容
 	} // 此方法只要有一個參數不符合皆為false
 
 	// [時間 防呆]
@@ -92,7 +92,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 			// 把字串轉換成LocalTime
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // 設定我們要的格式("HH:mm")，並放入名為formatter的空間
 			LocalTime classTime = LocalTime.parse(allTime, formatter); // 把輸入的時間格式(String),將
-																		// (classtime)轉成我們要的formatter的"HH:mm"格式
+																		// (classTime)轉成我們要的formatter的"HH:mm"格式
 			return classTime; // 符合就是回傳，不符合就是null(唯一)
 		} catch (Exception e) {
 			return null;
@@ -101,8 +101,8 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	// ==============================================================================
 	// 修改課程 Update
-	@Override
-	public SelectCourseRes updateCours(String courscode, String cours, String classday, String classtime, String recess,
+	@Override     //覆寫、重新定義
+	public SelectCourseRes updateCours(String coursCode, String cours, String classDay, String classTime, String recess,
 			int units) {
 		
 		// 課堂名稱修改不得為空
@@ -113,9 +113,9 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 		
 		// 上課時間不能為空，上課時間也不能晚於下課時間
 		// 上課星期格式是否符合 || 課程時間修改錯誤
-		LocalTime classtimeLocalTime = classTime(classtime); // LocalTime = 0的時候顯示方式為null
+		LocalTime classtimeLocalTime = classTime(classTime); // LocalTime = 0的時候顯示方式為null
 		LocalTime recessLocalTime = classTime(recess); // 字串轉LocalTime
-		if (!classDay(classday) || classtimeLocalTime == null || recessLocalTime == null || classtimeLocalTime.isAfter(recessLocalTime)) {
+		if (!classDay(classDay) || classtimeLocalTime == null || recessLocalTime == null || classtimeLocalTime.isAfter(recessLocalTime)) {
 			return new SelectCourseRes(SelectCourseRtnCode.FORMAT_ERROR.getRtnmessage()); //上課星期格式不符合規範
 		}
 
@@ -125,14 +125,14 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 			return new SelectCourseRes(SelectCourseRtnCode.CREDIT_ERROR.getRtnmessage()); //學分數修改錯誤
 		}
 
-		Optional<School> Update = schoolDao.findById(courscode);
+		Optional<School> Update = schoolDao.findById(coursCode);
 		if (!Update.isPresent()) { // 如果課程不存在
 			return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage()); //查無此課程
 		}else {
 			School updateClass = Update.get();
 			updateClass.setCourse(cours);
-			updateClass.setClassday(classday);
-			updateClass.setClasstime(classtimeLocalTime);
+			updateClass.setClassDay(classDay);
+			updateClass.setClassTime(classtimeLocalTime);
 			updateClass.setRecess(recessLocalTime);
 			updateClass.setUnits(units);
 			schoolDao.save(updateClass);
@@ -143,22 +143,22 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	// ==============================================================================
 	// 刪除課程 Delete
-	@Override
-	public SelectCourseRes deleteCours(String courscode) {
+	@Override    //覆寫、重新定義
+	public SelectCourseRes deleteCours(String coursCode) {
 
 		SelectCourseRes selectCourseRes = new SelectCourseRes();
 
-		if (!StringUtils.hasText(courscode)) { // 如果課程代碼為空
+		if (!StringUtils.hasText(coursCode)) { // 如果課程代碼為空
 			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //課程代碼不得為空
 		}
 
-		Optional<School> deleteCourse = schoolDao.findById(courscode); // 看資料庫是否有課程代碼
+		Optional<School> deleteCourse = schoolDao.findById(coursCode); // 看資料庫是否有課程代碼
 
 		if (!deleteCourse.isPresent()) { // 確認我要的課程代碼是否存在
 			return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage()); //查無此課程
 		}
 
-		schoolDao.deleteById(courscode); // 刪除此資訊
+		schoolDao.deleteById(coursCode); // 刪除此資訊
 		selectCourseRes.setMessage("課程已刪除");
 		return new SelectCourseRes(SelectCourseRtnCode.DELETE_SUCCESSFUL.getRtnmessage());
 	}
@@ -167,14 +167,14 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 	// 課程查詢 class query
 
 	// 一、透過代碼查詢
-	@Override
-	public SelectCourseRes classQuery(String courscode) {
+	@Override    //覆寫、重新定義
+	public SelectCourseRes classQuery(String coursCode) {
 		
-		if (!StringUtils.hasText(courscode)) { // 如果課程代碼為空
+		if (!StringUtils.hasText(coursCode)) { // 如果課程代碼為空
 			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //課程代碼不得為空
 		}
 
-		Optional<School> coursCodeQuery = schoolDao.findById(courscode);
+		Optional<School> coursCodeQuery = schoolDao.findById(coursCode);
 		if (!coursCodeQuery.isPresent()) {
 			return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage()); //查無課程代碼
 		}else {
@@ -184,15 +184,15 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 	}
 
 	// 透過課程名稱查詢
-	@Override
+	@Override    //覆寫、重新定義
 	public SelectCourseRes classnameQuery(String course) { // 查詢的課程代碼是否符合DB資料庫的代碼 符合就往下跑
 
 		if (!StringUtils.hasText(course)) { // 如果課程名稱為空
 			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //課程名稱不得為空
 		}
 
-		List<School> coursNameQuery = schoolDao.findAllByCourse(course);
-		if (coursNameQuery.isEmpty()) {
+		List<School> coursNameQuery = schoolDao.findAllByCourse(course);   //確認DB裡是否有課程這個東西
+		if (coursNameQuery.isEmpty()) {                                             //有， 比對要查詢的課程是否為空
 			return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage());      //查無課程資訊
 		}
 		return new SelectCourseRes(coursNameQuery,SelectCourseRtnCode.QUERY_SUCCESSFUL.getRtnmessage()); //查詢成功 以上為課程資訊
@@ -201,7 +201,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	// STUDENT
 	// 新增學生選課資訊
-	@Override
+	@Override       //覆寫、重新定義
 	public SelectCourseRes addStudentSelectCourse(String studentId, String studentName) {
 
 		// 學號、姓名不得為空
@@ -209,9 +209,9 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage()); //學號不得為空
 		}
 
-		Optional<Student> Id = studentDao.findById(studentId);
-		if (Id.isPresent()) {
-			return new SelectCourseRes(SelectCourseRtnCode.STUDENT_ID_EXISTED.getRtnmessage()); //此學號已使用
+		Optional<Student> Id = studentDao.findById(studentId);  //判斷DB是否有學號
+		if (Id.isPresent()) {              //有， 如果學號存在
+			return new SelectCourseRes(SelectCourseRtnCode.STUDENT_ID_EXISTED.getRtnmessage()); //此學號已被使用
 		}
 
 		Student student = new Student(studentId, studentName);
@@ -221,7 +221,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	// ======================================================================
 	// 修改學生資訊
-	@Override
+	@Override    //覆寫、重新定義
 	public SelectCourseRes updateStudentSelectCourse(String studentId, String studentName) {
 
 		//學號、學生資訊不得為空
@@ -244,7 +244,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	// ======================================================================
 	// 刪除學生資訊
-	@Override
+	@Override   //覆寫、重新定義
 	public SelectCourseRes deleteStudentSelectCourse(String studentId, String studentName) {
 
 		if (!StringUtils.hasText(studentId)) {
@@ -261,12 +261,12 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	/* ======================================================== */
 	// 選課 course selection (不得超過10學分、不能選相同名稱的課程、不能衝堂)
-	@Override
-	public SelectCourseRes courseSelection(String studentId, Set<String> courscode) {
+	@Override   //覆寫、重新定義
+	public SelectCourseRes courseSelection(String studentId, Set<String> coursCode) {
 		SelectCourseRes selectCourseRes = new SelectCourseRes();
 
 		// 選課學生資訊不得為空 || 選取的課程不得為空。  補充：單獨的.isEmpty() 不能接受空，但可以接受null
-		if (!StringUtils.hasText(studentId) || CollectionUtils.isEmpty(courscode)) {
+		if (!StringUtils.hasText(studentId) || CollectionUtils.isEmpty(coursCode)) {
 			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage());  //請先輸入個人資訊再選課
 		}
 
@@ -274,12 +274,12 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 		List<School> confirmClass = schoolDao.findAll(); // 所有DB Shool的內容
 		List<String> keepCourse = new ArrayList<>();
 		for (School schoolAllCurse : confirmClass) {
-			keepCourse.add(schoolAllCurse.getCoursecode());
+			keepCourse.add(schoolAllCurse.getCourseCode());
 		}
 //		if(!keepCourse.containsAll(courscode)) {
 //			selectCourseRes.setMessage("查無課程代碼 無法選課");
 //		}
-		boolean b = keepCourse.containsAll(courscode); // 輸入的課程是否符合DB全部的課成代碼
+		boolean b = keepCourse.containsAll(coursCode); // 輸入的課程是否符合DB全部的課成代碼
 		if (b == false) {
 			return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage()); //查無課程代碼
 		}
@@ -300,14 +300,14 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 		Set<String> courseSet = new HashSet<>(); // 不得重複的課程清單
 
 		int allUnits = 0; // 將總學分預設為0
-		List<School> getAllCourseCode = schoolDao.findAllByCoursecodeIn(courscode); // courscode：從PK取得課程資訊
+		List<School> getAllCourseCode = schoolDao.findAllByCoursecodeIn(coursCode); // courscode：從PK取得課程資訊
 		for (School keepAllCourseCodeContent : getAllCourseCode) { // 從課程代碼抓取課程名稱
 			courseList.add(keepAllCourseCodeContent.getCourse());
 			courseSet.add(keepAllCourseCodeContent.getCourse());
 			allUnits = allUnits + keepAllCourseCodeContent.getUnits(); // 從課程代碼抓取學分資訊
 //			allUnits += keepAllCourseCodeContent.getUnits();              
-			keepAllCourseCodeContent.getClassday(); // 從課程代碼抓取上課星期
-			keepAllCourseCodeContent.getClasstime(); // 從課程代碼抓取上課時間
+			keepAllCourseCodeContent.getClassDay(); // 從課程代碼抓取上課星期
+			keepAllCourseCodeContent.getClassTime(); // 從課程代碼抓取上課時間
 			keepAllCourseCodeContent.getRecess(); // 從課程代碼抓取下課時間
 		}
 		if (courseList.size() != courseSet.size()) { // 利用清單的限制 已課程名稱長度判斷是否有選到相同名稱的課程
@@ -322,12 +322,12 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 		// 不得衝堂
 
 		List<List<String>> lookDayAndGoOutTimeNo = new ArrayList<>();
-		List<School> geAllCourseCode = schoolDao.findAllByCoursecodeIn(courscode); // courscode：從PK取得課程資訊
+		List<School> geAllCourseCode = schoolDao.findAllByCoursecodeIn(coursCode); // courscode：從PK取得課程資訊
 		for (School keepCourseCodeContent : geAllCourseCode) { // foreach一個個遍歷 帶出資訊
 			List<String> courseDayAndGoOutTime = new ArrayList<>(); // 把星期 + 上下時間放進清單裡
-			courseDayAndGoOutTime.add(keepCourseCodeContent.getClassday());
+			courseDayAndGoOutTime.add(keepCourseCodeContent.getClassDay());
 			DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm"); // 設定字串格式
-			String goTimeStr = df.format(keepCourseCodeContent.getClasstime()); // 將Local time轉成字串
+			String goTimeStr = df.format(keepCourseCodeContent.getClassTime()); // 將Local time轉成字串
 			String outTimeStr = df.format(keepCourseCodeContent.getRecess());
 			courseDayAndGoOutTime.add(goTimeStr); // 加入上課時間
 			courseDayAndGoOutTime.add(outTimeStr); // 加入下課時間
@@ -354,7 +354,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 				}
 			}
 		}
-		String courscodeToString = courscode.toString(); // 將Set<String>轉成字串，因此前面要賦予字串型態
+		String courscodeToString = coursCode.toString(); // 將Set<String>轉成字串，因此前面要賦予字串型態
 		String courscodeStr = courscodeToString.substring(1, courscodeToString.length() - 1); // 去頭尾(括號)的方法：.substring(以index來算/有包含,陣列是用size
 																								// 字串是用.length
 																								// -1/不包含那個位子的內容); Ex
@@ -375,13 +375,13 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	/* ======================================================== */
 	// 加選
-	@Override
-	public SelectCourseRes addClass(String studentId, Set<String> courscode) {
+	@Override   //覆寫、重新定義
+	public SelectCourseRes addClass(String studentId, Set<String> coursCode) {
 		// 判斷學號、課程代碼是否為空
 		SelectCourseRes selectCourseRes = new SelectCourseRes();
-		String coursecodeStr = courscode.toString();
+		String coursecodeStr = coursCode.toString();
 		String coursecodeDelet = coursecodeStr.substring(1, coursecodeStr.length() - 1);
-		if (!StringUtils.hasText(studentId) || CollectionUtils.isEmpty(courscode) || !StringUtils.hasText(coursecodeDelet)) {
+		if (!StringUtils.hasText(studentId) || CollectionUtils.isEmpty(coursCode) || !StringUtils.hasText(coursecodeDelet)) {
 			return new SelectCourseRes(SelectCourseRtnCode.NOT_NULL.getRtnmessage());
 		}
 		
@@ -389,12 +389,12 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 				List<School> confirmClass = schoolDao.findAll(); // 所有DB Shool的內容
 				List<String> keepCourse = new ArrayList<>();
 				for (School schoolAllCurse : confirmClass) {
-					keepCourse.add(schoolAllCurse.getCoursecode());
+					keepCourse.add(schoolAllCurse.getCourseCode());
 				}
 //				if(!keepCourse.containsAll(courscode)) {
 //					selectCourseRes.setMessage("查無課程代碼 無法選課");
 //				}
-				boolean b = keepCourse.containsAll(courscode); // 輸入的課程是否符合DB全部的課成代碼
+				boolean b = keepCourse.containsAll(coursCode); // 輸入的課程是否符合DB全部的課成代碼
 				if (b == false) {
 					return new SelectCourseRes(SelectCourseRtnCode.NO_DATA.getRtnmessage()); //查無課程代碼
 				}
@@ -412,7 +412,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 			}
 
 			String studentOldstr = studentOp.get().getStudentClassCode(); // 原始選課資料
-			String studentCourscode = courscode.toString(); // 將set轉成string
+			String studentCourscode = coursCode.toString(); // 將set轉成string
 			String courscodeStr = studentCourscode.substring(1, studentCourscode.length() - 1); // 去除顯示結果所出現的前後括號
 			studentCoursCode.setStudentClassCode(courscodeStr); // 將轉換型態的加選課程放回資訊欄
 
@@ -441,8 +441,8 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 				courseSet.add(keepAllCourseCodeContent.getCourse());
 				allUnits = allUnits + keepAllCourseCodeContent.getUnits(); // 從課程代碼抓取學分資訊
 //				allUnits += keepAllCourseCodeContent.getUnits();              
-				keepAllCourseCodeContent.getClassday(); // 從課程代碼抓取上課星期
-				keepAllCourseCodeContent.getClasstime(); // 從課程代碼抓取上課時間
+				keepAllCourseCodeContent.getClassDay(); // 從課程代碼抓取上課星期
+				keepAllCourseCodeContent.getClassTime(); // 從課程代碼抓取上課時間
 				keepAllCourseCodeContent.getRecess(); // 從課程代碼抓取下課時間
 			}
 			if (courseList.size() != courseSet.size()) { // 利用清單的限制 已課程名稱長度判斷是否有選到相同名稱的課程
@@ -460,9 +460,9 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 			List<School> geAllCourseCode = schoolDao.findAllByCoursecodeIn(oldNewOpClass); // oldNewOpClass：從PK取得課程資訊
 			for (School keepCourseCodeContent : geAllCourseCode) { // foreach一個個遍歷 帶出資訊
 				List<String> courseDayAndGoOutTime = new ArrayList<>(); // 把星期+上下時間放進清單裡
-				courseDayAndGoOutTime.add(keepCourseCodeContent.getClassday());
+				courseDayAndGoOutTime.add(keepCourseCodeContent.getClassDay());
 				DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm"); // 設定字串格式
-				String goTimeStr = df.format(keepCourseCodeContent.getClasstime()); // 將Local time轉成字串
+				String goTimeStr = df.format(keepCourseCodeContent.getClassTime()); // 將Local time轉成字串
 				String outTimeStr = df.format(keepCourseCodeContent.getRecess());
 				courseDayAndGoOutTime.add(goTimeStr); // 加入上課時間
 				courseDayAndGoOutTime.add(outTimeStr); // 加入下課時間
@@ -501,8 +501,8 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	/* ======================================================== */
 //	退選
-	@Override
-	public SelectCourseRes WithdrawClass(String studentId, List<String> courscode) {
+	@Override  //覆寫、重新定義
+	public SelectCourseRes WithdrawClass(String studentId, List<String> coursCode) {
 
 		// 學號不得為空
 		if (!StringUtils.hasText(studentId)) {
@@ -527,11 +527,11 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 					}
 		
 		// 取得使用者輸入的退選課程代碼
-		List<School> courscodeList = schoolDao.findAllByCoursecodeIn(courscode);
+		List<School> courscodeList = schoolDao.findAllByCoursecodeIn(coursCode);
 		List<String> removeList = new ArrayList<>();
 		for (School item : courscodeList) {
-			if (codeList.contains(item.getCoursecode())) {
-				removeList.add(item.getCoursecode());
+			if (codeList.contains(item.getCourseCode())) {
+				removeList.add(item.getCourseCode());
 			}
 		}
 		
@@ -549,7 +549,7 @@ public class SelectCourseServiceImpl implements SelectCourseService {
 
 	/* ======================================================== */
 	// 學生所選課程總覽 class Overview (透過學號查詢)
-	@Override
+	@Override   //覆寫、重新定義
 	public SelectCourseRes classOverview(String studentId) {
 
 		if (!StringUtils.hasText(studentId)) {

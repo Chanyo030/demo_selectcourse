@@ -3,25 +3,25 @@ package com.example.demo_selectcourse.vo;
 import java.util.List;
 import java.util.Set;
 
-public class SelectCourseReq {                 //參數名稱與Json一致
+public class SelectCourseReq {          //請求      
 	
 	//SCHOOL
 	
 	//課程代碼
-	private String coursecode;
+	private String courseCode;                 //參數名稱與JSON一致
 	
-	private Set<String> coursecodeSet;
+	private Set<String> courseCodeSet;      //Set不允許重複清單
 	
-	private List<String> coursecodeList;
+	private List<String> courseCodeList;     //List清單
 	
 	//課程名稱
 	private String course;
 	
 	//上課星期
-	private String classday;
+	private String classDay;
 	
 	//上課時間
-	private String classtime;
+	private String classTime;
 	
 	//下課時間
 	private String recess;
@@ -33,34 +33,56 @@ public class SelectCourseReq {                 //參數名稱與Json一致
 	
 	//STUDENT
 	
+	//學號
 	private String studentId;
 	
+	//學生姓名
 	private String studentName;
 
-	/*================建構 and get/set==================*/
-
+	/*================建構方法 and get/set==================*/
+	//有、無參數的建構方法用意是為了能夠一次設定多個屬性的值
+	
 	public SelectCourseReq() {
 		
 	}
 
-	public SelectCourseReq(String coursecode, String course, String classday, String classtime, String recess,
-			int units, String studentId, String studentName) {
-		this.coursecode = coursecode;
+	public SelectCourseReq(String courseCode, Set<String> courseCodeSet, List<String> courseCodeList, String course,
+			String classDay, String classTime, String recess, int units, String studentId, String studentName) {
+		this.courseCode = courseCode;
+		this.courseCodeSet = courseCodeSet;
+		this.courseCodeList = courseCodeList;
 		this.course = course;
-		this.classday = classday;
-		this.classtime = classtime;
+		this.classDay = classDay;
+		this.classTime = classTime;
 		this.recess = recess;
 		this.units = units;
 		this.studentId = studentId;
 		this.studentName = studentName;
 	}
 
-	public String getCoursecode() {
-		return coursecode;
+	//Get、Set方法 讓其他class可以設定及取得這些屬性的值
+	public String getCourseCode() {
+		return courseCode;
 	}
 
-	public void setCoursecode(String coursecode) {
-		this.coursecode = coursecode;
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
+	}
+
+	public Set<String> getCourseCodeSet() {
+		return courseCodeSet;
+	}
+
+	public void setCourseCodeSet(Set<String> courseCodeSet) {
+		this.courseCodeSet = courseCodeSet;
+	}
+
+	public List<String> getCourseCodeList() {
+		return courseCodeList;
+	}
+
+	public void setCourseCodeList(List<String> courseCodeList) {
+		this.courseCodeList = courseCodeList;
 	}
 
 	public String getCourse() {
@@ -71,36 +93,20 @@ public class SelectCourseReq {                 //參數名稱與Json一致
 		this.course = course;
 	}
 
-	public Set<String> getCoursecodeSet() {
-		return coursecodeSet;
+	public String getClassDay() {
+		return classDay;
 	}
 
-	public void setCoursecodeSet(Set<String> coursecodeSet) {
-		this.coursecodeSet = coursecodeSet;
+	public void setClassDay(String classDay) {
+		this.classDay = classDay;
 	}
 
-	public List<String> getCoursecodeList() {
-		return coursecodeList;
+	public String getClassTime() {
+		return classTime;
 	}
 
-	public void setCoursecodeList(List<String> coursecodeList) {
-		this.coursecodeList = coursecodeList;
-	}
-
-	public String getClassday() {
-		return classday;
-	}
-
-	public void setClassday(String classday) {
-		this.classday = classday;
-	}
-
-	public String getClasstime() {
-		return classtime;
-	}
-
-	public void setClasstime(String classtime) {
-		this.classtime = classtime;
+	public void setClassTime(String classTime) {
+		this.classTime = classTime;
 	}
 
 	public String getRecess() {
