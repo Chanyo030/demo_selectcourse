@@ -7,28 +7,51 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity // 跟Spring Boot說這個class是實體類
-@Table(name = "school") // 告訴spring boot要連動到DB的school這張表
+//跟Spring Boot說這個class是實體類
+@Entity 
+
+//告訴spring boot要連動到DB的school哪張表
+@Table(name = "school") 
 public class School {
+	
+	//在DB裡course_code是這張表的主鍵(PK)
+	@Id        
+	
+	// 課程代碼       @Column是用來標識實體類屬性與資料表中欄位的對應關係。
+	@Column(name = "course_code") 
+	
+	//DB表裡的course_code與courseCode屬性相互對應關係。
+	private String courseCode;        
 
-	@Id        //在DB裡course_code是這張表的主鍵(PK)
-	@Column(name = "course_code") // 課程代碼       @Column是用來標識實體類屬性與資料表中欄位的對應關係。
-	private String courseCode;        //DB表裡的course_code與courseCode屬性相互對應關係。
+	// 課程名稱
+	@Column(name = "course") 
+	
+	//DB表裡的course與course屬性為相互對應關係。
+	private String course;       
 
-	@Column(name = "course") // 課程名稱
-	private String course;       //DB表裡的course與course屬性為相互對應關係。
+	// 上課星期
+	@Column(name = "class_day") 
+	
+	//DB表裡的class_day與classDay屬性為相互對應關係。
+	private String classDay;        
 
-	@Column(name = "class_day") // 上課星期
-	private String classDay;        //DB表裡的class_day與classDay屬性為相互對應關係。
+	// 上課時間
+	@Column(name = "class_time") 
+	
+	//DB表裡的class_time與classTime屬性為相互對應關係。
+	private LocalTime classTime;   
+	
+    // 下課時間
+	@Column(name = "recess") 
+	
+	//DB表裡的recess與recess屬性為相互對應關係。
+	private LocalTime recess;   
 
-	@Column(name = "class_time") // 上課時間
-	private LocalTime classTime;   //DB表裡的class_time與classTime屬性為相互對應關係。
-
-	@Column(name = "recess") // 下課時間
-	private LocalTime recess;   //DB表裡的recess與recess屬性為相互對應關係。
-
-	@Column(name = "units") // 課程學分
-	private int units;           //DB表裡的units與units屬性為相互對應關係。
+	// 課程學分
+	@Column(name = "units") 
+	
+	//DB表裡的units與units屬性為相互對應關係。
+	private int units;           
 
 	//有、無參數的建構方法用意是為了能夠一次設定多個屬性的值
 	public School() {           

@@ -3,16 +3,19 @@ package com.example.demo_selectcourse.vo;
 import java.util.List;
 import java.util.Set;
 
-public class SelectCourseReq {          //請求      
+//請求  
+public class SelectCourseReq {              
 	
 	//SCHOOL
 	
-	//課程代碼
-	private String courseCode;                 //參數名稱與JSON一致
+	//課程代碼 (參數名稱需與JSON一致)
+	private String courseCode;
 	
-	private Set<String> courseCodeSet;      //Set不允許重複清單
+	//Set不允許重複清單
+	private Set<String> courseCodeSet;      
 	
-	private List<String> courseCodeList;     //List清單
+	//List清單
+	private List<String> courseCodeList;     
 	
 	//課程名稱
 	private String course;

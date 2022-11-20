@@ -7,6 +7,7 @@ import com.example.demo_selectcourse.vo.SelectCourseRes;
 
 public interface SelectCourseService {
 	// SCHOOL
+	
 	// ·s¼W½Òµ{ Create
 	public SelectCourseRes createCours(String courscode, String course, String classday, String classtime,
 			String recess, int units);

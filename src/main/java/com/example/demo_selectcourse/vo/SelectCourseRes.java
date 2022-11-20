@@ -6,52 +6,55 @@ import com.example.demo_selectcourse.entity.School;
 import com.example.demo_selectcourse.entity.Student;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)          //隱藏NULL
-public class SelectCourseRes {             //回傳
+//隱藏NULL
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
-	//SCHOOL
+//回傳
+public class SelectCourseRes {
+
+	// SCHOOL
 	private School school;
-	
-	//課程查詢
-		private List<School> classQuery;
+
+	// 課程查詢
+	private List<School> classQuery;
 
 //=========================================//		
-	//STUDENT
-		private Student student;
-	
+	// STUDENT
+	private Student student;
+
 	// 共同錯誤訊息提示
 	private String message;
-	
+
 //==================RthCode=======================//
-	public SelectCourseRes(School school, String message ) {
+	public SelectCourseRes(School school, String message) {
 		this.school = school;
 		this.message = message;
 	}
-	
-	public SelectCourseRes(List<School> classQuery, String message ) {
+
+	public SelectCourseRes(List<School> classQuery, String message) {
 		this.classQuery = classQuery;
 		this.message = message;
 	}
-	
-	public SelectCourseRes(List<School> classQuery, Student student, String message ) {
+
+	public SelectCourseRes(List<School> classQuery, Student student, String message) {
 		this.classQuery = classQuery;
 		this.student = student;
 		this.message = message;
 	}
-	
-	public SelectCourseRes(Student student, String message ) {
+
+	public SelectCourseRes(Student student, String message) {
 		this.student = student;
 		this.message = message;
 	}
-	
-	
+
 	public SelectCourseRes(String message) {
 		this.message = message;
 	}
-	/*================建構方法 and get/set==================*/
-	//有、無參數的建構方法用意是為了能夠一次設定多個屬性的值
+
+	/* ================建構方法 and get/set================== */
+	// 有、無參數的建構方法用意是為了能夠一次設定多個屬性的值
 	public SelectCourseRes() {
-		
+
 	}
 
 	public SelectCourseRes(School school, List<School> classQuery, Student student, String message) {
@@ -62,8 +65,8 @@ public class SelectCourseRes {             //回傳
 		this.message = message;
 	}
 
-	//Get、Set方法 讓其他class可以設定及取得這些屬性的值
-	
+	// Get、Set方法 讓其他class可以設定及取得這些屬性的值
+
 	public School getSchool() {
 		return school;
 	}
@@ -95,5 +98,5 @@ public class SelectCourseRes {             //回傳
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 }
