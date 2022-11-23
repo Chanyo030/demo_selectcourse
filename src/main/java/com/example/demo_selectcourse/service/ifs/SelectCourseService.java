@@ -8,45 +8,45 @@ import com.example.demo_selectcourse.vo.SelectCourseRes;
 public interface SelectCourseService {
 	// SCHOOL
 	
-	// 新增課程 Create
-	public SelectCourseRes createCours(String courscode, String course, String classday, String classtime,
-			String recess, int units);
+	// 新增(創建)課程 Create
+	public SelectCourseRes createCourse(String coursCode, String courseName, String courseday, String startTime,
+			String endTime, int units);
 
 	// 修改課程 Update
-	public SelectCourseRes updateCours(String courscode, String course, String classday, String classtime,
-			String recess, int units);
+	public SelectCourseRes updateCourse(String coursCode, String courseName, String courseday, String startTime,
+			String endTime, int units);
 
 	// 刪除課程 Delete
-	public SelectCourseRes deleteCours(String courscode);
+	public SelectCourseRes deleteCourse(String courseCode);
 
 	// 課程查詢 class query (透過代碼查詢)
-	public SelectCourseRes classQuery(String courscode);
+	public SelectCourseRes courseQuery(String courseCode);
 
 	// 課程查詢 class name query (透過課堂名稱查詢)
-	public SelectCourseRes classnameQuery(String course);
+	public SelectCourseRes courseNameQuery(String courseName);
 
 	/* ============================================================= */
 	// STUDENT
 
-	// 新增學生選課資訊
-	public SelectCourseRes addStudentSelectCourse(String studentId, String studentName);
+	// 新增學生資訊
+	public SelectCourseRes addStudentInfo(String studentId, String studentName);
 
-	// 修改學生選課資訊
-	public SelectCourseRes updateStudentSelectCourse(String studentId, String studentName);
+	// 修改學生資訊
+	public SelectCourseRes updateStudentInfo(String studentId, String studentName);
 
-	// 刪除學生選課資訊
-	public SelectCourseRes deleteStudentSelectCourse(String studentId, String studentName);
+	// 刪除學生資訊
+	public SelectCourseRes deleteStudentInfo(String studentId, String studentName);
 
 	// 選課 course selection
-	public SelectCourseRes courseSelection(String studentId, Set<String> courscode);
+	public SelectCourseRes courseSelection(String studentId, Set<String> courseCode);
 
 	// 加選 add class
-	public SelectCourseRes addClass(String studentId, Set<String> courscode);
+	public SelectCourseRes addCourse(String studentId, Set<String> courseCode);
 	
 	// 退選 withdraw class
-	public SelectCourseRes WithdrawClass(String studentId, List<String> courscode);
+	public SelectCourseRes WithdrawCourse(String studentId, List<String> courseCode);
 	
 	// 學生所選課程總覽 class Overview (透過學號查詢)
-	public SelectCourseRes classOverview(String studentId);
+	public SelectCourseRes courseOverview(String studentId);
 
 }

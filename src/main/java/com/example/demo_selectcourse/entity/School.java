@@ -14,69 +14,58 @@ import javax.persistence.Table;
 @Table(name = "school") 
 public class School {
 	
-	//在DB裡course_code是這張表的主鍵(PK)
+	// 在DB裡course_code是這張表的主鍵(PK)
+	// 課程代碼 (@Column是用來標識實體類屬性與資料表中欄位的對應關係)
+	// DB表裡的屬性相互對應關係。
 	@Id        
-	
-	// 課程代碼       @Column是用來標識實體類屬性與資料表中欄位的對應關係。
 	@Column(name = "course_code") 
-	
-	//DB表裡的course_code與courseCode屬性相互對應關係。
 	private String courseCode;        
 
 	// 課程名稱
-	@Column(name = "course") 
-	
-	//DB表裡的course與course屬性為相互對應關係。
-	private String course;       
+	@Column(name = "course_name") 
+	private String courseName;       
 
 	// 上課星期
-	@Column(name = "class_day") 
-	
-	//DB表裡的class_day與classDay屬性為相互對應關係。
-	private String classDay;        
+	@Column(name = "course_day") 
+	private String courseDay;        
 
-	// 上課時間
-	@Column(name = "class_time") 
+	// 開始時間
+	@Column(name = "start_time") 
+	private LocalTime startTime;   
 	
-	//DB表裡的class_time與classTime屬性為相互對應關係。
-	private LocalTime classTime;   
-	
-    // 下課時間
-	@Column(name = "recess") 
-	
-	//DB表裡的recess與recess屬性為相互對應關係。
-	private LocalTime recess;   
+    // 結束時間
+	@Column(name = "end_time") 
+	private LocalTime endTime;   
 
 	// 課程學分
 	@Column(name = "units") 
-	
-	//DB表裡的units與units屬性為相互對應關係。
 	private int units;           
 
 	//有、無參數的建構方法用意是為了能夠一次設定多個屬性的值
 	public School() {           
 
 	}
+	
+	public School(String courseName, String courseDay, LocalTime startTime, LocalTime endTime,
+			int units) {
+		this.courseName = courseName;
+		this.courseDay = courseDay;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.units = units;
+	}
+	
 
-	public School(String courseCode, String course, String classDay, LocalTime classTime, LocalTime recess, int units) {
+	public School(String courseCode, String courseName, String courseDay, LocalTime startTime, LocalTime endTime,
+			int units) {
 		this.courseCode = courseCode;
-		this.course = course;
-		this.classDay = classDay;
-		this.classTime = classTime;
-		this.recess = recess;
-		this.units = units;
-	}
-	
-	public School(String course, String classDay, LocalTime classTime, LocalTime recess, int units) {
-		this.course = course;
-		this.classDay = classDay;
-		this.classTime = classTime;
-		this.recess = recess;
+		this.courseName = courseName;
+		this.courseDay = courseDay;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.units = units;
 	}
 
-	//Get、Set方法 讓其他class可以設定及取得這些屬性的值
-	
 	public String getCourseCode() {
 		return courseCode;
 	}
@@ -85,36 +74,36 @@ public class School {
 		this.courseCode = courseCode;
 	}
 
-	public String getCourse() {
-		return course;
+	public String getCourseName() {
+		return courseName;
 	}
 
-	public void setCourse(String course) {
-		this.course = course;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
-	public String getClassDay() {
-		return classDay;
+	public String getCourseDay() {
+		return courseDay;
 	}
 
-	public void setClassDay(String classDay) {
-		this.classDay = classDay;
+	public void setCourseDay(String courseDay) {
+		this.courseDay = courseDay;
 	}
 
-	public LocalTime getClassTime() {
-		return classTime;
+	public LocalTime getStartTime() {
+		return startTime;
 	}
 
-	public void setClassTime(LocalTime classTime) {
-		this.classTime = classTime;
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
 	}
 
-	public LocalTime getRecess() {
-		return recess;
+	public LocalTime getEndTime() {
+		return endTime;
 	}
 
-	public void setRecess(LocalTime recess) {
-		this.recess = recess;
+	public void setEndTime(LocalTime endTime) {
+		this.endTime = endTime;
 	}
 
 	public int getUnits() {
@@ -124,5 +113,6 @@ public class School {
 	public void setUnits(int units) {
 		this.units = units;
 	}
+
 
 }

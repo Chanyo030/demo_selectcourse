@@ -21,13 +21,13 @@ public class SelectCourseReq {
 	private String course;
 	
 	//上課星期
-	private String classDay;
+	private String courseDay;
 	
 	//上課時間
-	private String classTime;
+	private String startTime;
 	
 	//下課時間
-	private String recess;
+	private String endTime;
 	
 	//課程學分
 	private int units;
@@ -49,96 +49,116 @@ public class SelectCourseReq {
 		
 	}
 
+
 	public SelectCourseReq(String courseCode, Set<String> courseCodeSet, List<String> courseCodeList, String course,
-			String classDay, String classTime, String recess, int units, String studentId, String studentName) {
+			String courseDay, String startTime, String endTime, int units, String studentId, String studentName) {
 		this.courseCode = courseCode;
 		this.courseCodeSet = courseCodeSet;
 		this.courseCodeList = courseCodeList;
 		this.course = course;
-		this.classDay = classDay;
-		this.classTime = classTime;
-		this.recess = recess;
+		this.courseDay = courseDay;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.units = units;
 		this.studentId = studentId;
 		this.studentName = studentName;
 	}
 
-	//Get、Set方法 讓其他class可以設定及取得這些屬性的值
+
 	public String getCourseCode() {
 		return courseCode;
 	}
+
 
 	public void setCourseCode(String courseCode) {
 		this.courseCode = courseCode;
 	}
 
+
 	public Set<String> getCourseCodeSet() {
 		return courseCodeSet;
 	}
+
 
 	public void setCourseCodeSet(Set<String> courseCodeSet) {
 		this.courseCodeSet = courseCodeSet;
 	}
 
+
 	public List<String> getCourseCodeList() {
 		return courseCodeList;
 	}
+
 
 	public void setCourseCodeList(List<String> courseCodeList) {
 		this.courseCodeList = courseCodeList;
 	}
 
+
 	public String getCourse() {
 		return course;
 	}
+
 
 	public void setCourse(String course) {
 		this.course = course;
 	}
 
-	public String getClassDay() {
-		return classDay;
+
+	public String getCourseDay() {
+		return courseDay;
 	}
 
-	public void setClassDay(String classDay) {
-		this.classDay = classDay;
+
+	public void setCourseDay(String courseDay) {
+		this.courseDay = courseDay;
 	}
 
-	public String getClassTime() {
-		return classTime;
+
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setClassTime(String classTime) {
-		this.classTime = classTime;
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 
-	public String getRecess() {
-		return recess;
+
+	public String getEndTime() {
+		return endTime;
 	}
 
-	public void setRecess(String recess) {
-		this.recess = recess;
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
+
 
 	public int getUnits() {
 		return units;
 	}
 
+
 	public void setUnits(int units) {
 		this.units = units;
 	}
+
 
 	public String getStudentId() {
 		return studentId;
 	}
 
+
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
 
+
 	public String getStudentName() {
 		return studentName;
 	}
+
 
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;

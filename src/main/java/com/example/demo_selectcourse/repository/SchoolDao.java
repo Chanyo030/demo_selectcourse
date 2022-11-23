@@ -14,10 +14,10 @@ import com.example.demo_selectcourse.entity.School;
 public interface SchoolDao extends JpaRepository<School, String> {
 
 	// 透過課程名稱尋找符合的課程 (course看主類別打什麼就輸入什麼)
-	public List<School> findAllByCourse(String course); 
+	public List<School> findAllByCourseName(String courseName); 
 	
 	//透過一個或多個課程代碼尋找符合的課程         In可用於多個，也就是集合(跟陣列、清單有關的都是)
-	public List<School> findAllByCourseCodeIn(Set<String> allCourse);   
+	public List<School> findAllByCourseCodeIn(Set<String> allCourseCode);   
 	
 	//透過一個或多個課程代碼尋找符合的課程         In可用於多個，也就是集合(跟陣列、清單有關的都是)
 	public List<School> findAllByCourseCodeIn(List<String> CourseCode);

@@ -1,6 +1,7 @@
 package com.example.demo_selectcourse.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import com.example.demo_selectcourse.service.ifs.SelectCourseService;
 import com.example.demo_selectcourse.vo.SelectCourseReq;
 import com.example.demo_selectcourse.vo.SelectCourseRes;
 
+@CrossOrigin
 @RestController // 用於回傳JSON、XML等資料。相當於@Controller + @RequestBody
 public class SelectCourseController {
 
@@ -19,7 +21,7 @@ public class SelectCourseController {
 	// 新增課程 Create
 
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/createcourse")
+	@PostMapping(value = "/api/createCourse")
 
 	// @RequestBody用來標記資料存取層(介面層interface) req是用來接收外部資料並放入api裡使用
 	public SelectCourseRes createCourse(@RequestBody SelectCourseReq req) {
@@ -28,8 +30,8 @@ public class SelectCourseController {
 		SelectCourseRes selectCourseRes = new SelectCourseRes();
 
 		// 輸入想要新增的課程並套用Service方法
-		selectCourseRes = selectCourseService.createCours(req.getCourseCode(), req.getCourse(), req.getClassDay(),
-				req.getClassTime(), req.getRecess(), req.getUnits());
+		selectCourseRes = selectCourseService.createCourse(req.getCourseCode(), req.getCourse(), req.getCourseDay(),
+				req.getStartTime(), req.getEndTime(), req.getUnits());
 
 		// 最後回傳
 		return selectCourseRes;
@@ -38,17 +40,17 @@ public class SelectCourseController {
 	// ==============================================================================
 	// 修改課程 update
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/updateCours") 
+	@PostMapping(value = "/api/updateCourse") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface)  req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes updateCours(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes updateCourse(@RequestBody SelectCourseReq req) { 
 									
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要修改的課程並套用Service方法
-		selectCourseRes = selectCourseService.updateCours(req.getCourseCode(), req.getCourse(), req.getClassDay(), 
-				req.getClassTime(), req.getRecess(), req.getUnits());
+		selectCourseRes = selectCourseService.updateCourse(req.getCourseCode(), req.getCourse(), req.getCourseDay(), 
+				req.getStartTime(), req.getEndTime(), req.getUnits());
 		
 		// 最後回傳
 		return selectCourseRes; 
@@ -58,16 +60,16 @@ public class SelectCourseController {
 	// 刪除課程 Delete
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/delete") 
+	@PostMapping(value = "/api/deleteCourse") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface) // req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes deleteCours(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes deleteCourse(@RequestBody SelectCourseReq req) { 
 																			
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要刪除的課程並套用Service方法
-		selectCourseRes = selectCourseService.deleteCours(req.getCourseCode()); 
+		selectCourseRes = selectCourseService.deleteCourse(req.getCourseCode()); 
 		
 		// 最後回傳
 		return selectCourseRes; 
@@ -78,8 +80,8 @@ public class SelectCourseController {
 	
 	// 透過代碼查詢
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/classQuery") 
-	public SelectCourseRes classQuery(@RequestBody SelectCourseReq req) { 
+	@PostMapping(value = "/api/courseQuery") 
+	public SelectCourseRes courseQuery(@RequestBody SelectCourseReq req) { 
 		
 		// @RequestBody用來標記資料存取層(介面層interface) req是用來接收外部資料並放入api裡使用
 		
@@ -87,7 +89,7 @@ public class SelectCourseController {
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要查詢的課程並套用Service方法
-		selectCourseRes = selectCourseService.classQuery(req.getCourseCode()); // 輸入想要查詢的課程並套用Service方法
+		selectCourseRes = selectCourseService.courseQuery(req.getCourseCode()); // 輸入想要查詢的課程並套用Service方法
 		
 		// 最後回傳
 		return selectCourseRes;
@@ -96,16 +98,16 @@ public class SelectCourseController {
 	// 透過課程名稱查詢
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/classnameQuery") 
+	@PostMapping(value = "/api/courseNameQuery") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface) req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes classnameQuery(@RequestBody SelectCourseReq req) { 						
+	public SelectCourseRes courseNameQuery(@RequestBody SelectCourseReq req) { 						
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要查詢的課程並套用Service方法
-		selectCourseRes = selectCourseService.classnameQuery(req.getCourse()); 
+		selectCourseRes = selectCourseService.courseNameQuery(req.getCourse()); 
 		
 		// 最後回傳
 		return selectCourseRes; 
@@ -116,16 +118,16 @@ public class SelectCourseController {
 	// 新增學生選課資訊
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/addStudentSelectCourse") 
+	@PostMapping(value = "/api/addStudentInfo") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface) req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes addStudentSelectCourse(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes addStudentInfo(@RequestBody SelectCourseReq req) { 
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes();
 		
 		// 輸入想要新增的學生選課資訊並套用Service方法
-		selectCourseRes = selectCourseService.addStudentSelectCourse(req.getStudentId(), req.getStudentName()); 
+		selectCourseRes = selectCourseService.addStudentInfo(req.getStudentId(), req.getStudentName()); 
 		
 		// 最後回傳
 		return selectCourseRes;
@@ -135,14 +137,14 @@ public class SelectCourseController {
 	// 修改學生選課資訊
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/updateStudentSelectCourse") 
-	public SelectCourseRes updateStudentSelectCourse(@RequestBody SelectCourseReq req) {
+	@PostMapping(value = "/api/updateStudentInfo") 
+	public SelectCourseRes updateStudentInfo(@RequestBody SelectCourseReq req) {
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要修改的學生選課資訊並套用Service方法
-		selectCourseRes = selectCourseService.updateStudentSelectCourse(req.getStudentId(), req.getStudentName()); 
+		selectCourseRes = selectCourseService.updateStudentInfo(req.getStudentId(), req.getStudentName()); 
 		
 		// 最後回傳
 		return selectCourseRes;
@@ -152,16 +154,16 @@ public class SelectCourseController {
 	// 刪除學生選課資訊
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/deleteStudentSelectCourse") 
+	@PostMapping(value = "/api/deleteStudentInfo") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface)  req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes deleteStudentSelectCourse(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes deleteStudentInfo(@RequestBody SelectCourseReq req) { 
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要刪除的學生選課資訊並套用Service方法
-		selectCourseRes = selectCourseService.deleteStudentSelectCourse(req.getStudentId(), req.getStudentName()); 
+		selectCourseRes = selectCourseService.deleteStudentInfo(req.getStudentId(), req.getStudentName()); 
 		
 		// 最後回傳
 		return selectCourseRes; 
@@ -190,16 +192,16 @@ public class SelectCourseController {
 	// 加選 add class
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/addClass") 
+	@PostMapping(value = "/api/addCourse") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface)  req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes addClass(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes addCourse(@RequestBody SelectCourseReq req) { 
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要加選的課並套用Service方法
-		selectCourseRes = selectCourseService.addClass(req.getStudentId(), req.getCourseCodeSet()); 
+		selectCourseRes = selectCourseService.addCourse(req.getStudentId(), req.getCourseCodeSet()); 
 		
 		// 最後回傳
 		return selectCourseRes; 
@@ -209,16 +211,16 @@ public class SelectCourseController {
 	// 退選 withdraw class
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/WithdrawClass") 
+	@PostMapping(value = "/api/WithdrawCourse") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface)  req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes WithdrawClass(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes WithdrawCourse(@RequestBody SelectCourseReq req) { 
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要退選的課並套用Service方法
-		selectCourseRes = selectCourseService.WithdrawClass(req.getStudentId(), req.getCourseCodeList()); 
+		selectCourseRes = selectCourseService.WithdrawCourse(req.getStudentId(), req.getCourseCodeList()); 
 		
 		// 最後回傳
 		return selectCourseRes; 
@@ -228,16 +230,16 @@ public class SelectCourseController {
 	// 學生所選課程總覽 class Overview (透過學號查詢)
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/classOverview")
+	@PostMapping(value = "/api/courseOverview")
 	
 	// @RequestBody用來標記資料存取層(介面層interface)  req是用來接收外部資料並放入api裡使用
-	public SelectCourseRes classOverview(@RequestBody SelectCourseReq req) { 
+	public SelectCourseRes courseOverview(@RequestBody SelectCourseReq req) { 
 		
 		// new一個selectCourseRes的空間(new的作用是為一個物件（Object）分配記憶體)
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要查詢的學生學號並套用Service方法
-		selectCourseRes = selectCourseService.classOverview(req.getStudentId()); 
+		selectCourseRes = selectCourseService.courseOverview(req.getStudentId()); 
 		
 		// 最後回傳
 		return selectCourseRes; 

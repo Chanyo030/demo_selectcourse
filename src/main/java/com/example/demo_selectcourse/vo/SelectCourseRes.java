@@ -16,7 +16,7 @@ public class SelectCourseRes {
 	private School school;
 
 	// ½Òµ{¬d¸ß
-	private List<School> classQuery;
+	private List<School> courseQuery;
 
 //=========================================//		
 	// STUDENT
@@ -31,13 +31,13 @@ public class SelectCourseRes {
 		this.message = message;
 	}
 
-	public SelectCourseRes(List<School> classQuery, String message) {
-		this.classQuery = classQuery;
+	public SelectCourseRes(List<School> courseQuery, String message) {
+		this.courseQuery = courseQuery;
 		this.message = message;
 	}
 
-	public SelectCourseRes(List<School> classQuery, Student student, String message) {
-		this.classQuery = classQuery;
+	public SelectCourseRes(List<School> courseQuery, Student student, String message) {
+		this.courseQuery = courseQuery;
 		this.student = student;
 		this.message = message;
 	}
@@ -57,10 +57,10 @@ public class SelectCourseRes {
 
 	}
 
-	public SelectCourseRes(School school, List<School> classQuery, Student student, String message) {
+	public SelectCourseRes(School school, List<School> courseQuery, Student student, String message) {
 		super();
 		this.school = school;
-		this.classQuery = classQuery;
+		this.courseQuery = courseQuery;
 		this.student = student;
 		this.message = message;
 	}
@@ -75,12 +75,12 @@ public class SelectCourseRes {
 		this.school = school;
 	}
 
-	public List<School> getClassQuery() {
-		return classQuery;
+	public List<School> getCourseQuery() {
+		return courseQuery;
 	}
 
-	public void setClassQuery(List<School> classQuery) {
-		this.classQuery = classQuery;
+	public void setCourseQuery(List<School> courseQuery) {
+		this.courseQuery = courseQuery;
 	}
 
 	public Student getStudent() {
