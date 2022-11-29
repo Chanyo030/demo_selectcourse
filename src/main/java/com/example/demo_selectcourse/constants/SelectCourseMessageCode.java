@@ -6,7 +6,7 @@ public enum SelectCourseMessageCode { // enumerated (enum) 列舉
 	SUCCESSFUL("200", "Successful"),
 
 	// 選課成功
-	SELECT_COURSE_SUCCESSFUL("200", "Successful"),
+	SELECT_COURSE_SUCCESSFUL("200", "Select Course Successful"),
 
 	// 課程修改成功
 	REVISE_SUCCESSFUL("200", "Revise Successful"),

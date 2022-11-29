@@ -50,14 +50,14 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		LocalTime endTimeLocalTime = checkTime(endTime); //
 
 		// ¤W½Ò¬P´Á®æ¦¡¬O§_²Å¦X || ½Òµ{®É¶¡­×§ï¤£±o¬°NULL (¸É¥R¡GLocalTime = 0 ªº®É­ÔÅã¥Ü¤è¦¡¬°null) ||
-				// ½Ò°ó¶}©l®É¶¡¤£¯à¶W¹L½Ò°óµ²§ô®É¶¡
-				if (!checkCourseDayFormat(courseDay) || startTimeLocalTime == null || endTimeLocalTime == null
-						|| startTimeLocalTime.isAfter(endTimeLocalTime)) {
+		// ½Ò°ó¶}©l®É¶¡¤£¯à¶W¹L½Ò°óµ²§ô®É¶¡
+		if (!checkCourseDayFormat(courseDay) || startTimeLocalTime == null || endTimeLocalTime == null
+				|| startTimeLocalTime.isAfter(endTimeLocalTime)) {
 
-					// ¦^¶Ç´£¥Ü°T®§ ¤W½Ò¬P´Á¡B®É¶¡®æ¦¡¤£²Å¦X³W½d
-					return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAIL.getMessage());
-				}
-		
+			// ¦^¶Ç´£¥Ü°T®§ ¤W½Ò¬P´Á¡B®É¶¡®æ¦¡¤£²Å¦X³W½d
+			return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAIL.getMessage());
+		}
+
 		// ¾Ç¤À¼Æ¿ù»~´£¿ô¡G¾Ç¤À¤£±o¤Ö©ó0(¬°ªÅ)¤Î¤j©ó3 -> ¾Ç¤À¼Æ¤£²Å¦X³W½d
 		if (units <= 0 || units > 3) {
 			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAIL.getMessage());
@@ -74,7 +74,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		// ½Òµ{¥N½X¤£¦s¦b©Î¬O¨S³Q¨Ï¥Î -> ´£¥Ü°T®§ ½Òµ{³Ð«Ø¦¨¥\
 		School school = new School(courseCode, courseName, courseDay, startTimeLocalTime, endTimeLocalTime, units);
 		schoolDao.save(school);
-		return new SelectCourseRes(school, SelectCourseMessageCode.SUCCESSFUL.getMessage());//
+		return new SelectCourseRes(school, SelectCourseMessageCode.SUCCESSFUL.getMessage());
 	}
 
 	// ==============================================================================
@@ -114,11 +114,12 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		if (!schoolOp.isPresent()) {
 			return new SelectCourseRes(SelectCourseMessageCode.NO_DATA.getMessage());
 		} else {
-			School school = new School(courseName, courseDay, startTimeLocalTime, endTimeLocalTime, units);
+			School school = schoolOp.get();
+			school.updateSchool(courseName, courseDay, startTimeLocalTime, endTimeLocalTime, units);
 			schoolDao.save(school);
-
+			
 			// ¦^¶Ç´£¥Ü°T®§ ½Òµ{­×§ï¦¨¥\
-			return new SelectCourseRes(school, SelectCourseMessageCode.REVISE_SUCCESSFUL.getMessage());
+			return new SelectCourseRes(school, SelectCourseMessageCode.REVISE_SUCCESSFUL.getMessage());  
 		}
 	}
 
@@ -291,7 +292,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		// ±N§PÂ_µ²ªG©ñ¤J¦W¬°studentIdAndcourseCodeResªºªÅ¶¡
 		SelectCourseRes studentIdAndCourseCodeRes = checkCourseCode(studentId, courseCodeSet);
 
-		// ·í§PÂ_µ²ªG¤£µ¥©ónull¡A¥Nªí¦³½Òµ{¥N½X¤w¦s¦b -> ªð¦^´£¥Ü°T®§ ¬dµL½Òµ{¥N½X
+		// ·í§PÂ_µ²ªG¤£µ¥©ónull¡A¥Nªí¦³½Òµ{¥N½X¤£¦s¦b -> ªð¦^´£¥Ü°T®§ ¬dµL½Òµ{¥N½X
 		if (studentIdAndCourseCodeRes != null) {
 			return studentIdAndCourseCodeRes;
 		}
@@ -299,9 +300,9 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		// ½T»{DB¬O§_¦³¾Ç¸¹
 		Optional<Student> studentOp = studentDao.findById(studentId);
 
-		// ¾Ç¸¹¿é¤J¿ù»~ -> ´£¥Ü°T®§ ¾Ç¸¹¤£¦s¦b
+		// ¾Ç¸¹¤£¦s¦b -> ´£¥Ü°T®§ ¬dµL¦¹¾Ç¸¹
 		if (!studentOp.isPresent()) {
-			return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.NO_DATA.getMessage());
 		}
 
 		// ³z¹L¾Ç¸¹(PK)¨ú±o¦¹¾Ç¥Íªº©Ò¦³­Ó¤H¸ê°T
@@ -316,7 +317,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		// ¤£¯à¿ï¬Û¦P¦WºÙªº½Òµ{ and ¿ï½Ò¤£±o¶W¹L10¾Ç¤À
 
 		// Á`µù¸Ñ¡G³Ð«Ø¤@­ÓList¡BSet²M³æ¤À§O¦s©ñ¾Ç¥Í¿é¤Jªº½Òµ{¦WºÙ
-		// ³Ð«Ø¤@­Ó¦s¦³©Ò¦³½Òµ{¦WºÙªº²M³æ (¤ñ¹ï½Òµ{¦WºÙ¥Î)
+		// ³Ð«Ø¤@­Ó¦s©ñ©Ò¦³½Òµ{¦WºÙªº²M³æ (¤ñ¹ï½Òµ{¦WºÙ¥Î)
 		List<String> courseNameList = new ArrayList<>();
 
 		// ³Ð«Ø¤@­Ó¦s©ñ¤£±o­«½Æªº½Òµ{¦WºÙ²M³æ (¤ñ¹ï½Òµ{¦WºÙ¥Î)
@@ -512,7 +513,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		// ³Ð«Ø¤@­Ó¦s©ñ°h¿ï½Òµ{¥N½Xªº²M³æ (¹ï¤ñ¥Î)
 		List<String> withdrawCourseCodeList = new ArrayList<>();
 
-		// ±N¾Ç¥Í°h¿ïªº½Òµ{¥N½X¥Î³r¸¹¹j¶}¥hªÅ¥Õ -> ©ñ¶i²M³æ¸Ì
+		// ±N²Å¦XDBªº½Òµ{¥N½X(allCourseCodeList)¤@­Ó­Ó¹M¾ú¡A½T»{¬O§_¦³²Å¦Xªº°h¿ï½Òµ{¥N½X -> ²Å¦Xªº©ñ¶i°h¿ï½Òµ{¥N½X²M³æ¸Ì
 		for (School schoolItem : allCourseCodeList) {
 			if (studentCourseCodeList.contains(schoolItem.getCourseCode())) {
 				withdrawCourseCodeList.add(schoolItem.getCourseCode());
@@ -607,14 +608,14 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		}
 	}
 
-	// §PÂ_¿ï¨úªº½Òµ{¬O§_²Å¦XDB¸ê°T (§PÂ_½Òµ{¬O§_¦s¦b)
+	// §PÂ_¿ï¨úªº½Òµ{¬O§_²Å¦XDB¸ê°T (§PÂ_¾Ç¸¹¡B½Òµ{¬O§_¦s¦b)
 	private SelectCourseRes checkCourseCode(String studentId, Set<String> courseCodeSet) {
 
 		// ¾Ç¸¹¬°ªÅ || ¿ï¨úªº½Òµ{¥N½X¬°ªÅ -> ´£¥Ü°T®§ ¾Ç¸¹¡B½Òµ{¥N½X¤£±oªÅ (¸É¥R¡G³æ¿Wªº.isEmpty() ¤£¯à±µ¨üªÅ¡A¦ý¥i¥H±µ¨ünull)
 		if (!StringUtils.hasText(studentId) || CollectionUtils.isEmpty(courseCodeSet)) {
 			return new SelectCourseRes(SelectCourseMessageCode.NOT_NULL.getMessage());
 		}
-		
+
 		// ±NDB©Ò¦³½Òµ{¸ê°T©ñ¤JconfirmClassList²M³æ (¾Ö¦³schoolªº©Ò¦³½Òµ{¸ê°T)
 		List<School> confirmClassList = schoolDao.findAll();
 

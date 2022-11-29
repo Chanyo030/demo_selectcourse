@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,6 +18,7 @@ public class School {
 	// 在DB裡course_code是這張表的主鍵(PK)
 	// 課程代碼 (@Column是用來標識實體類屬性與資料表中欄位的對應關係)
 	// DB表裡的屬性相互對應關係。
+	
 	@Id        
 	@Column(name = "course_code") 
 	private String courseCode;        
@@ -47,6 +49,15 @@ public class School {
 	}
 	
 	public School(String courseName, String courseDay, LocalTime startTime, LocalTime endTime,
+			int units) {
+		this.courseName = courseName;
+		this.courseDay = courseDay;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.units = units;
+	}
+	
+	public void updateSchool(String courseName, String courseDay, LocalTime startTime, LocalTime endTime,
 			int units) {
 		this.courseName = courseName;
 		this.courseDay = courseDay;
