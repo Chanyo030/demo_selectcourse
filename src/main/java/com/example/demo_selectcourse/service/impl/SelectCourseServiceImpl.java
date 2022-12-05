@@ -310,7 +310,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 
 		// ¦pªG¾Ç¥Í·í«e¤w¿ï¹L½Ò -> ´£¥Ü°T®§ §A¤w¿ï¹L½Ò¡A½Ð¥h¥[°h¿ï
 		if (StringUtils.hasText(student.getCourseCode())) {
-			return new SelectCourseRes(SelectCourseMessageCode.HAVE_CLASS_GO_ADDOROUT_CLASS.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.HAVE_SELECT_COURSE.getMessage());
 		}
 
 		// ==============================================================
@@ -346,7 +346,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		if (courseNameList.size() != courseNameSet.size()) {
 
 			// ¦^¶Ç´£¥Ü°T®§ µLªk¥[¿ï¬Û¦P¦WºÙªº½Òµ{
-			return new SelectCourseRes(SelectCourseMessageCode.NOT_SAME_CLASS.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.NOT_SAME_COURSE.getMessage());
 		}
 
 		// ·í¿ï½Ò¾Ç¤ÀÁ`­p¶W¹L10 -> ´£¥Ü°T®§ ¶W¹L10¾Ç¤À­­¨î
@@ -409,7 +409,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 
 		// ¾Ç¥Íªº½Òµ{¥N½X¬°ªÅ -> ´£¥Ü°T®§ §A¨S¿ï¹L½Ò¡A½Ð¥h¿ï½Ò
 		if (!StringUtils.hasText(student.getCourseCode())) {
-			return new SelectCourseRes(SelectCourseMessageCode.NOT_CLASS_GO_ADD_CLASS.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.NOT_SELECT_COURSE.getMessage());
 		}
 
 		// ±qDB¨ú±o¾Ç¥Í'­ì©l'ªº¿ï½Ò¸ê°T(²Ä¤@¦¸¿ïªº½Ò)
@@ -757,7 +757,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		if (courseNameList.size() != courseNameSet.size()) {
 
 			// ²M³æªø«×¤£¦P -> ¦^¶Ç´£¥Ü°T®§ µLªk¥[¿ï¬Û¦P¦WºÙªº½Òµ{
-			return new SelectCourseRes(SelectCourseMessageCode.NOT_SAME_CLASS.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.NOT_SAME_COURSE.getMessage());
 		}
 
 		// Á`¾Ç¤À¶W¹L10

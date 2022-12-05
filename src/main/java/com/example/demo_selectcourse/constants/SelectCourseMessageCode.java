@@ -42,16 +42,16 @@ public enum SelectCourseMessageCode { // enumerated (enum) 列舉
 	NO_DATA("400", "no data"), 
 	
 	// 你已選過課 請去加退選
-	HAVE_CLASS_GO_ADDOROUT_CLASS("400", "Selected Courses,Please go and withdraw."), 
+	HAVE_SELECT_COURSE("400", "Please add or withdraw."), 
 	
 	// 無法加選相同名稱的課程
-	NOT_SAME_CLASS("400", "had to repeat the course."), 
+	NOT_SAME_COURSE("400", "repeat course."), 
 	
 	// 衝堂
 	OUTFID("400", "outfid"), 
 	
 	// 你沒選過課 請在此加選
-	NOT_CLASS_GO_ADD_CLASS("400", "No classes have been selected yet. Please add them."); 
+	NOT_SELECT_COURSE("400", "Please add."); 
 
 	// 名稱自取 (code , message)
 	private String code;
