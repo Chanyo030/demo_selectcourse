@@ -18,19 +18,19 @@ public enum SelectCourseMessageCode { // enumerated (enum) 列舉
 	QUERY_SUCCESSFUL("200", "Query Successful"),
 
 	// 課程加選成功
-	CLASS_ADD_SUCCESSFUL("200", "Class add Successful"),
+	COURSE_ADD_SUCCESSFUL("200", "Course add Successful"),
 
 	// 課程退選成功
-	WITHDRAW_CLASS_SUCCESSFUL("200", "Withdraw class Successful"),
+	WITHDRAW_CLASS_SUCCESSFUL("200", "withdraw class Successful"),
 
 	// 欄位不得為空
 	NOT_NULL("400", "Value can not null!!!"),
 
 	// 輸寫格式錯誤
-	FORMAT_FAIL("400", "format fail"),
+	FORMAT_FAILED("400", "format failed"),
 
 	// 學分範圍不符
-	CREDIT_FAIL("400", "credit fail"),
+	CREDIT_FAILED("400", "credit failed"),
 
 	// 課程代碼已存在
 	CLASS_CODE_EXISTED("400", "class code existed"),

@@ -44,7 +44,7 @@ public interface SelectCourseService {
 	public SelectCourseRes addCourse(String studentId, Set<String> courseCode);
 	
 	// 退選 withdraw class
-	public SelectCourseRes WithdrawCourse(String studentId, List<String> courseCode);
+	public SelectCourseRes withdrawCourse(String studentId, List<String> courseCode);
 	
 	// 學生所選課程總覽 class Overview (透過學號查詢)
 	public SelectCourseRes courseOverview(String studentId);

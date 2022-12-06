@@ -55,12 +55,12 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 				|| startTimeLocalTime.isAfter(endTimeLocalTime)) {
 
 			// ¦^¶Ç´£¥Ü°T®§ ¤W½Ò¬P´Á¡B®É¶¡®æ¦¡¤£²Å¦X³W½d
-			return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAILED.getMessage());
 		}
 
 		// ¾Ç¤À¼Æ¿ù»~´£¿ô¡G¾Ç¤À¤£±o¤Ö©ó0(¬°ªÅ)¤Î¤j©ó3 -> ¾Ç¤À¼Æ¤£²Å¦X³W½d
 		if (units <= 0 || units > 3) {
-			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAILED.getMessage());
 		}
 
 		// ½T»{DB¸Ì¬O§_¦³½Òµ{¥N½X
@@ -99,12 +99,12 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 				|| startTimeLocalTime.isAfter(endTimeLocalTime)) {
 
 			// ¦^¶Ç´£¥Ü°T®§ ¤W½Ò¬P´Á¡B®É¶¡®æ¦¡¤£²Å¦X³W½d
-			return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.FORMAT_FAILED.getMessage());
 		}
 
 		// ¾Ç¤À¤£±o¤Ö©ó0¤Î¤j©ó3 -> ´£¥Ü°T®§ ¾Ç¤À¼Æ­×§ï¿ù»~
 		if (units <= 0 || units > 3) {
-			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAILED.getMessage());
 		}
 
 		// ½T»{DB¬O§_¦³½Òµ{¥N½X
@@ -351,7 +351,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 
 		// ·í¿ï½Ò¾Ç¤ÀÁ`­p¶W¹L10 -> ´£¥Ü°T®§ ¶W¹L10¾Ç¤À­­¨î
 		if (allUnits > 10) {
-			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAILED.getMessage());
 		}
 
 		// ==============================================================
@@ -471,13 +471,13 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		studentDao.save(student);
 
 		// Àx¦s¦¨¥\ -> ¦^¶Ç©Ò¦³¥[¿ï½Òµ{¤Î´£¥Ü°T®§ ½Òµ{¥[¿ï¦¨¥\
-		return new SelectCourseRes(student, SelectCourseMessageCode.CLASS_ADD_SUCCESSFUL.getMessage());
+		return new SelectCourseRes(student, SelectCourseMessageCode.COURSE_ADD_SUCCESSFUL.getMessage());
 	}
 
 	/* ======================================================== */
 //	°h¿ï
 	@Override // ÂÐ¼g¡B­«·s©w¸q
-	public SelectCourseRes WithdrawCourse(String studentId, List<String> courseCodeList) {
+	public SelectCourseRes withdrawCourse(String studentId, List<String> courseCodeList) {
 
 		// ¾Ç¸¹¬°ªÅ¡B½Òµ{¥N½X¬°ªÅ -> ´£¥Ü°T®§ ¾Ç¸¹¡B½Òµ{¥N½X¤£±o¬°ªÅ
 		if (!StringUtils.hasText(studentId) || CollectionUtils.isEmpty(courseCodeList)) {
@@ -764,7 +764,7 @@ public class SelectCourseServiceImpl implements SelectCourseService { // ¹ï¤º³¡¶
 		if (allUnits > 10) {
 
 			// ¦^¶Ç´£¥Ü°T®§ ¶W¹L10¾Ç¤À­­¨î µLªk¿ï½Ò
-			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAIL.getMessage());
+			return new SelectCourseRes(SelectCourseMessageCode.CREDIT_FAILED.getMessage());
 		}
 
 		// ²M³æªø«×¬Û¦P¡B¾Ç¤À¼Æ²Å¦X -> ¦^¶Çnull
