@@ -21,7 +21,7 @@ public class SelectCourseController {
 	// 新增課程 Create
 
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/createCourse")
+	@PostMapping(value = "/api/addCreateCourse")
 
 	// @RequestBody用來標記資料存取層(介面層interface) req是用來接收外部資料並放入api裡使用
 	public SelectCourseRes createCourse(@RequestBody SelectCourseReq req) {
@@ -211,7 +211,7 @@ public class SelectCourseController {
 	// 退選 withdraw class
 	
 	// @PostMapping用來處理post類型的http请求
-	@PostMapping(value = "/api/WithdrawCourse") 
+	@PostMapping(value = "/api/withdrawCourse") 
 	
 	// @RequestBody用來標記資料存取層(介面層interface)  req是用來接收外部資料並放入api裡使用
 	public SelectCourseRes WithdrawCourse(@RequestBody SelectCourseReq req) { 
@@ -220,7 +220,7 @@ public class SelectCourseController {
 		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
 		
 		// 輸入想要退選的課並套用Service方法
-		selectCourseRes = selectCourseService.WithdrawCourse(req.getStudentId(), req.getCourseCodeList()); 
+		selectCourseRes = selectCourseService.withdrawCourse(req.getStudentId(), req.getCourseCodeList()); 
 		
 		// 最後回傳
 		return selectCourseRes; 
