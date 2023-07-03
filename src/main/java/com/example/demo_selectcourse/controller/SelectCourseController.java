@@ -1,16 +1,19 @@
 package com.example.demo_selectcourse.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo_selectcourse.entity.School;
 import com.example.demo_selectcourse.service.ifs.SelectCourseService;
 import com.example.demo_selectcourse.vo.SelectCourseReq;
 import com.example.demo_selectcourse.vo.SelectCourseRes;
 
-@CrossOrigin
+@CrossOrigin //連接前端用的
 @RestController // 用於回傳JSON、XML等資料。相當於@Controller + @RequestBody
 public class SelectCourseController {
 
@@ -112,6 +115,15 @@ public class SelectCourseController {
 		// 最後回傳
 		return selectCourseRes; 
 	}
+	
+	// 課程總覽 CourseAllInfo
+	@PostMapping(value = "/api/courseAllInfo") 
+	public SelectCourseRes courseAllInfo(@RequestBody SelectCourseReq req) {
+				
+		SelectCourseRes selectCourseRes = new SelectCourseRes(); 			
+		selectCourseRes = selectCourseService.courseAllInfo(); 				
+		return selectCourseRes;						
+	}
 
 	/* ====================STUDENT======================= */
 
@@ -168,6 +180,35 @@ public class SelectCourseController {
 		// 最後回傳
 		return selectCourseRes; 
 	}
+	
+	// ==============================================================================
+	// 學生查詢 studentIdQuery (透過學號查詢)
+	@PostMapping(value ="/api/studentIdQuery")
+		public SelectCourseRes studentIdQuery(@RequestBody SelectCourseReq req) {
+		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
+		selectCourseRes = selectCourseService.studentIdQuery(req.getStudentId());
+		return selectCourseRes;
+		}
+
+
+	// ==============================================================================
+		// 學生查詢 studentNameQuery (透過姓名查詢)
+	@PostMapping(value ="/api/studentNameQuery")
+		public SelectCourseRes studentNameQuery(@RequestBody SelectCourseReq req) {
+		SelectCourseRes selectCourseRes = new SelectCourseRes(); 
+		selectCourseRes = selectCourseService.studentNameQuery(req.getStudentName());
+		return selectCourseRes;
+			
+		}
+	// ==============================================================================
+		// 學生總覽	studentAllInfo
+		@PostMapping(value ="/api/studentAllInfo")
+		public SelectCourseRes studentAllInfo(@RequestBody SelectCourseReq req) {
+			SelectCourseRes selectCourseRes = new SelectCourseRes(); 
+			selectCourseRes = selectCourseService.studentAllInfo();
+			return selectCourseRes;
+			
+		}
 
 	// ==============================================================================
 	// 選課 course selection (不得超過10學分、不能選相同名稱的課程、不能衝堂)

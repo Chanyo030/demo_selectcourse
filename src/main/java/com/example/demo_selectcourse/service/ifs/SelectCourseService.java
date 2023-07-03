@@ -24,6 +24,9 @@ public interface SelectCourseService {
 
 	// 課程查詢 class name query (透過課堂名稱查詢)
 	public SelectCourseRes courseNameQuery(String courseName);
+	
+	// 課程總覽 CourseAllInfo
+	public SelectCourseRes courseAllInfo();
 
 	/* ============================================================= */
 	// STUDENT
@@ -36,6 +39,15 @@ public interface SelectCourseService {
 
 	// 刪除學生資訊
 	public SelectCourseRes deleteStudentInfo(String studentId, String studentName);
+	
+	// 學生查詢 studentIdQuery (透過學號查詢)
+	public SelectCourseRes studentIdQuery(String studentId);
+
+	// 學生查詢 studentNameQuery (透過姓名查詢)
+	public SelectCourseRes studentNameQuery(String studentName);
+	
+	// 學生總覽	studentAllInfo
+	public SelectCourseRes studentAllInfo();
 
 	// 選課 course selection
 	public SelectCourseRes courseSelection(String studentId, Set<String> courseCode);
@@ -48,5 +60,7 @@ public interface SelectCourseService {
 	
 	// 學生所選課程總覽 class Overview (透過學號查詢)
 	public SelectCourseRes courseOverview(String studentId);
-
+	
+	
+	
 }

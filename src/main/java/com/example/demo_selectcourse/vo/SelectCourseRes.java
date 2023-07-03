@@ -17,10 +17,14 @@ public class SelectCourseRes {
 
 	// 課程查詢
 	private List<School> courseQuery;
+	
+	private List<School> selectCourseList;
 
 //=========================================//		
 	// STUDENT
 	private Student student;
+	
+	private List<Student> studentAllList;
 
 	// 共同錯誤訊息提示
 	private String message;
@@ -46,6 +50,10 @@ public class SelectCourseRes {
 		this.student = student;
 		this.message = message;
 	}
+	
+	public SelectCourseRes(List<School> selectCourseList) {
+		this.selectCourseList = selectCourseList;
+	}
 
 	public SelectCourseRes(String message) {
 		this.message = message;
@@ -56,7 +64,12 @@ public class SelectCourseRes {
 	public SelectCourseRes() {
 
 	}
-
+	
+	public SelectCourseRes(String message, List<Student> studentAllList) {
+		this.message = message;
+		this.studentAllList = studentAllList;
+	}
+	
 	public SelectCourseRes(School school, List<School> courseQuery, Student student, String message) {
 		super();
 		this.school = school;
@@ -74,6 +87,14 @@ public class SelectCourseRes {
 	public void setSchool(School school) {
 		this.school = school;
 	}
+	
+	public List<School> getSelectCourseList() {
+		return selectCourseList;
+	}
+
+	public void setSelectCourseList(List<School> selectCourseList) {
+		this.selectCourseList = selectCourseList;
+	}
 
 	public List<School> getCourseQuery() {
 		return courseQuery;
@@ -89,6 +110,14 @@ public class SelectCourseRes {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	public List<Student> getStudentAllList() {
+		return studentAllList;
+	}
+
+	public void setStudentAllList(List<Student> studentAllList) {
+		this.studentAllList = studentAllList;
 	}
 
 	public String getMessage() {

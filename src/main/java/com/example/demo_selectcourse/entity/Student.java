@@ -5,10 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 // 跟Spring Boot說這個class是實體類
 @Entity   
 
 //告訴spring boot要連動到DB的student這張表
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "student")    
 
 public class Student {
